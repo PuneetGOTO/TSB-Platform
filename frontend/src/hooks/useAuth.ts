@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Check if user is logged in on initial load
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
