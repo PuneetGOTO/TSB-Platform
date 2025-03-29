@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext, ReactNode, createElement } from 'react';
 import axios from 'axios';
 
 interface User {
@@ -19,11 +19,15 @@ interface AuthContextType {
   logout: () => void;
 }
 
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
 // Create auth context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Auth provider component (to be used in App.tsx)
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+// Auth provider component
+export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -162,7 +166,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Auth context value
-  const value = {
+  const value: AuthContextType = {
     isAuthenticated,
     user,
     loading,
@@ -172,11 +176,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     logout
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // Return the provider using React.createElement instead of JSX
+  return createElement(
+    AuthContext.Provider,
+    { value },
+    children
+  );
 }
 
 // Hook to use auth context
-export function useAuth() {
+export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
   
   if (context === undefined) {
