@@ -26,7 +26,7 @@ const HeatmapLayer = ({
   opacity = 0.7,
 }: HeatmapLayerProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const { scene } = useThree();
+  const { } = useThree();
   
   // Create heatmap texture
   useEffect(() => {

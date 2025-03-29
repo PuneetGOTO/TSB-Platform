@@ -105,7 +105,7 @@ const ResourceFlow = ({ data, height = 1 }: ResourceFlowProps) => {
   }, [data, height]);
   
   // Animate particles
-  useFrame((state, delta) => {
+  useFrame(() => {
     if (!particlesRef.current || !data?.transfers) return;
     
     const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
@@ -136,7 +136,7 @@ const ResourceFlow = ({ data, height = 1 }: ResourceFlowProps) => {
         );
         
         // Move along path
-        pos.add(direction.clone().multiplyScalar(delta * 5));
+        pos.add(direction.clone().multiplyScalar(0.05));
         
         // Check if particle reached destination
         const distanceFromStart = start.distanceTo(pos);

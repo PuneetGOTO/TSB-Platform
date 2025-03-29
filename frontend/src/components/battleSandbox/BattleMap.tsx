@@ -15,7 +15,7 @@ const BattleMap = ({
   heightData
 }: BattleMapProps) => {
   const mapRef = useRef<THREE.Mesh>(null);
-  const { scene } = useThree();
+  const { } = useThree();
 
   // Load textures
   const textures = useTexture({
@@ -49,8 +49,7 @@ const BattleMap = ({
     }
   }, [heightData]);
 
-  // Optional animation - could be used for water, lava, or other dynamic elements
-  useFrame((state, delta) => {
+  useFrame(() => {
     // Add any animations here if needed
   });
 

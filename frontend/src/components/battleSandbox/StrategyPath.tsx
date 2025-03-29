@@ -79,10 +79,11 @@ const StrategyPath = ({
     if (!data?.strategies || !markerRef.current) return;
     
     // Update animation progress for each strategy
-    data.strategies.forEach((strategy, index) => {
+    data.strategies.forEach((strategy) => {
       if (!strategy.active) return;
       
       // Increment progress
+      const index = data.strategies.indexOf(strategy);
       animationProgressRef.current[index] += delta * animation.speed;
       if (animationProgressRef.current[index] > 1) {
         animationProgressRef.current[index] = 0;
@@ -166,7 +167,7 @@ const StrategyPath = ({
       
       {/* Animated markers for active strategies */}
       <group ref={markerRef}>
-        {data.strategies.map((strategy, index) => (
+        {data.strategies.map((strategy) => (
           <group key={strategy.id} visible={strategy.active}>
             {/* Pulsing effect for marker */}
             <mesh>
@@ -181,7 +182,7 @@ const StrategyPath = ({
             
             {/* Direction arrow */}
             <mesh position={[0, 0.1, 0]}>
-              <coneGeometry args={[0.3, 0.8, 8]} rotation={[Math.PI/2, 0, 0]} />
+              <coneGeometry args={[0.3, 0.8, 8]} />
               <meshBasicMaterial color={strategy.color} />
             </mesh>
             
@@ -189,7 +190,7 @@ const StrategyPath = ({
             <mesh rotation={[Math.PI/2, 0, 0]}>
               <ringGeometry args={[0.5, 0.6, 32]} />
               <meshBasicMaterial 
-                color={strategy.success > 0.6 ? '#44ff44' : strategy.success > 0.3 ? '#ffcc00' : '#ff4444'} 
+                color={strategy.success && strategy.success > 0.6 ? '#44ff44' : strategy.success && strategy.success > 0.3 ? '#ffcc00' : '#ff4444'} 
                 transparent 
                 opacity={0.8}
               />
